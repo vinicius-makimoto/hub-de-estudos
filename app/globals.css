@@ -1,35 +1,92 @@
 @import "tailwindcss";
 
+/* Kenjidev dark theme */
+
 :root {
-  --ink: #172136;
-  --muted: #64748b;
-  --brand: #6750e6;
-  --brand-dark: #4936c9;
-  --paper: #f7f7fb;
+  color-scheme: dark;
+  --ink: #f1f1f1;
+  --muted: #aab4c3;
+  --brand: #1473f3;
+  --brand-dark: #005de0;
+  --paper: #0f0f11;
+  --surface: #13243f;
+  --surface-strong: #172c4c;
+  --line: rgba(255, 255, 255, .12);
 }
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; background: #0f0f11; }
 
 body {
   margin: 0;
   color: var(--ink);
   background:
-    radial-gradient(circle at 85% 8%, rgba(255, 196, 137, .22), transparent 22rem),
-    linear-gradient(180deg, #fbfaff 0%, var(--paper) 38rem);
+    radial-gradient(circle at 85% 8%, rgba(20, 115, 243, .18), transparent 28rem),
+    linear-gradient(180deg, #0b1019 0%, var(--paper) 38rem);
   font-family: Arial, Helvetica, sans-serif;
+  min-width: 0;
+  overflow-x: clip;
 }
 
-button, input { font: inherit; }
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+  opacity: .28;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, black, transparent 75%);
+}
+
+button, input, textarea, select { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+input, textarea, select { color: var(--ink); }
+input::placeholder, textarea::placeholder { color: #7f8a9a; }
+select option { color: var(--ink); background: var(--surface); }
+
+/* Dark palette based on kenjidevbr.com.br. These mappings keep existing
+   Tailwind components consistent while the application adopts one theme. */
+.bg-white { background-color: var(--surface); }
+.bg-white\/70, .bg-white\/75, .bg-white\/80 { background-color: rgba(19, 36, 63, .88); }
+.bg-slate-50, .bg-slate-100 { background-color: var(--surface-strong); }
+.bg-slate-900, .bg-slate-950 { background-color: #08111f; }
+.text-slate-950, .text-slate-900, .text-slate-800, .text-slate-700 { color: var(--ink); }
+.text-slate-600, .text-slate-500, .text-slate-400, .text-slate-300 { color: var(--muted); }
+.border-slate-100, .border-slate-200, .border-slate-300 { border-color: var(--line); }
+.border-blue-100, .border-blue-200, .border-blue-300 { border-color: rgba(20, 115, 243, .3); }
+.bg-blue-50 { background-color: rgba(20, 115, 243, .1); }
+.bg-blue-100 { background-color: rgba(20, 115, 243, .18); }
+.text-blue-700, .text-blue-800 { color: #69a7ff; }
+.focus\:ring-blue-100:focus { --tw-ring-color: rgba(20, 115, 243, .2); }
+.hover\:bg-slate-100:hover { background-color: var(--surface-strong); }
+.hover\:bg-blue-50:hover { background-color: rgba(20, 115, 243, .14); }
+.shadow-blue-200 { --tw-shadow-color: transparent; }
+.shadow-sm { --tw-shadow-color: rgba(0, 0, 0, .22); }
+.shadow-lg, .shadow-2xl { --tw-shadow-color: rgba(0, 0, 0, .3); }
+.bg-emerald-50 { background-color: rgba(16, 185, 129, .12); }
+.text-emerald-700 { color: #6ee7b7; }
+.bg-amber-50 { background-color: rgba(245, 158, 11, .12); }
+.text-amber-700 { color: #fcd34d; }
+.bg-rose-50 { background-color: rgba(244, 63, 94, .12); }
+.text-rose-700 { color: #fda4af; }
 
 ::selection { color: white; background: var(--brand); }
+
+:focus-visible {
+  outline: 2px solid #69a7ff;
+  outline-offset: 3px;
+}
 
 @keyframes shimmer {
   100% { transform: translateX(100%); }
 }
 
-.skeleton { position: relative; overflow: hidden; background: #e9e7f1; }
+.skeleton { position: relative; overflow: hidden; background: #172c4c; }
 .skeleton::after {
   content: "";
   position: absolute;

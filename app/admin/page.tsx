@@ -34,7 +34,7 @@ async function AdminContent() {
       <main className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
         <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[.18em] text-[#6750e6]">
+            <p className="text-sm font-bold uppercase tracking-[.18em] text-[#1473f3]">
               Gerenciamento
             </p>
             <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
@@ -46,7 +46,7 @@ async function AdminContent() {
           </div>
           <Link
             href="/admin/materias/nova"
-            className="rounded-2xl bg-[#6750e6] px-5 py-3.5 text-center text-sm font-bold text-white shadow-lg shadow-violet-200 transition hover:bg-[#4936c9]"
+            className="rounded-lg bg-[#1473f3] px-5 py-3 text-center text-sm font-bold text-white transition hover:bg-[#005de0]"
           >
             + Nova matéria
           </Link>
@@ -62,7 +62,7 @@ async function AdminContent() {
             {materias.map((materia) => (
               <article
                 key={materia.id}
-                className="flex flex-col gap-5 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:p-6"
+                className="flex flex-col gap-5 rounded-2xl border border-white/10 bg-white p-5 transition hover:border-[#1473f3]/35 sm:flex-row sm:items-center sm:p-6"
               >
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
@@ -86,7 +86,7 @@ async function AdminContent() {
                 <div className="flex flex-wrap gap-2">
                   <Link
                     href={`/admin/materias/${materia.id}`}
-                    className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:border-violet-200 hover:bg-violet-50 hover:text-[#6750e6]"
+                    className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-[#1473f3]"
                   >
                     Editar
                   </Link>
@@ -109,7 +109,7 @@ async function AdminContent() {
                   {materia.publicado && (
                     <Link
                       href={`/materias/${materia.id}`}
-                      className="rounded-xl px-4 py-2.5 text-sm font-bold text-[#6750e6] hover:bg-violet-50"
+                      className="rounded-xl px-4 py-2.5 text-sm font-bold text-[#1473f3] hover:bg-blue-50"
                     >
                       Visualizar
                     </Link>

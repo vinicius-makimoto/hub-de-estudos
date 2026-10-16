@@ -28,10 +28,10 @@ export function StudyProgress({ materiaId }: { materiaId: string }) {
   }
 
   return (
-    <div className={`rounded-3xl border p-5 transition ${completed ? "border-emerald-200 bg-emerald-50" : "border-violet-100 bg-violet-50"}`}>
-      <p className={`text-xs font-bold uppercase tracking-[.16em] ${completed ? "text-emerald-700" : "text-[#6750e6]"}`}>Seu progresso</p>
+    <div className={`rounded-3xl border p-5 transition ${completed ? "border-emerald-200 bg-emerald-50" : "border-blue-100 bg-blue-50"}`}>
+      <p className={`text-xs font-bold uppercase tracking-[.16em] ${completed ? "text-emerald-700" : "text-[#1473f3]"}`}>Seu progresso</p>
       <p className="mt-2 text-sm font-semibold text-slate-700">{completed ? "Matéria concluída" : "Em andamento"}</p>
-      <button type="button" onClick={toggleCompleted} className={`mt-4 w-full rounded-xl px-4 py-3 text-sm font-bold transition ${completed ? "bg-white text-emerald-700 shadow-sm hover:bg-emerald-100" : "bg-[#6750e6] text-white hover:bg-[#4936c9]"}`}>
+      <button type="button" onClick={toggleCompleted} className={`mt-4 w-full rounded-xl px-4 py-3 text-sm font-bold transition ${completed ? "bg-white text-emerald-700 shadow-sm hover:bg-emerald-100" : "bg-[#1473f3] text-white hover:bg-[#005de0]"}`}>
         {completed ? "Marcar como não concluída" : "Marcar como concluída"}
       </button>
     </div>

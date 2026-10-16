@@ -6,8 +6,10 @@ import type { Curso } from "@/lib/types";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import { connection } from "next/server";
 
 async function NewSubjectContent() {
+  await connection();
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
@@ -17,11 +19,11 @@ async function NewSubjectContent() {
     <>
       <AdminHeader email={user.email} />
       <main className="mx-auto max-w-3xl px-5 py-10 sm:px-8 sm:py-14">
-        <Link href="/admin" className="text-sm font-bold text-slate-500 hover:text-[#6750e6]">← Voltar ao painel</Link>
+        <Link href="/admin" className="text-sm font-bold text-slate-500 hover:text-[#1473f3]">← Voltar ao painel</Link>
         <div className="mt-8 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_16px_50px_rgba(30,41,59,.08)] sm:p-10">
-          <p className="text-sm font-bold uppercase tracking-[.18em] text-[#6750e6]">Cadastro</p>
-          <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950">Nova matéria</h1>
-          <p className="mb-8 mt-3 text-sm text-slate-500">Comece como rascunho e publique quando o conteúdo estiver pronto.</p>
+          <p className="text-sm font-bold uppercase tracking-[.18em] text-[#1473f3]">Etapa 1 de 2</p>
+          <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950">Dados gerais da matéria</h1>
+          <p className="mb-8 mt-3 text-sm leading-6 text-slate-500">Selecione o curso e informe o título e a descrição geral. Na próxima etapa, você organizará as aulas e adicionará um material diferente a cada uma.</p>
           <MateriaForm action={createMateriaAction} cursos={(data ?? []) as Curso[]} />
         </div>
       </main>

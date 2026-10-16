@@ -18,7 +18,10 @@ function readMateria(formData: FormData) {
     curso_id: String(formData.get("curso_id") ?? "").trim(),
     titulo: String(formData.get("titulo") ?? "").trim(),
     descricao: String(formData.get("descricao") ?? "").trim() || null,
-    conteudo: String(formData.get("conteudo") ?? "").trim() || null,
+    professor: String(formData.get("professor") ?? "").trim() || null,
+    total_aulas: String(formData.get("total_aulas") ?? "").trim() ? Number(formData.get("total_aulas")) : null,
+    avaliacao: String(formData.get("avaliacao") ?? "").trim() || null,
+    bibliografia: String(formData.get("bibliografia") ?? "").trim() || null,
     publicado: formData.get("publicado") === "on",
   };
 }
