@@ -8,9 +8,10 @@ type MateriaFormProps = {
   action: (state: AdminActionState, formData: FormData) => Promise<AdminActionState>;
   cursos: Curso[];
   materia?: Materia;
+  initialCursoId?: string;
 };
 
-export function MateriaForm({ action, cursos, materia }: MateriaFormProps) {
+export function MateriaForm({ action, cursos, materia, initialCursoId }: MateriaFormProps) {
   const [state, formAction, pending] = useActionState(action, { error: "" });
   const fieldClass = "w-full min-w-0 rounded-2xl border border-slate-200 bg-white px-4 py-3.5 font-normal outline-none transition focus:border-blue-400 focus:ring-4 focus:ring-blue-100";
 
@@ -19,7 +20,7 @@ export function MateriaForm({ action, cursos, materia }: MateriaFormProps) {
       {materia && <input type="hidden" name="id" value={materia.id} />}
       <label className="grid gap-2 text-sm font-bold text-slate-700">
         Curso
-        <select name="curso_id" required defaultValue={materia?.curso_id ?? ""} className={fieldClass}>
+        <select name="curso_id" required defaultValue={materia?.curso_id ?? initialCursoId ?? ""} className={fieldClass}>
           <option value="" disabled>Selecione um curso</option>
           {cursos.map((curso) => <option key={curso.id} value={curso.id}>{curso.titulo}</option>)}
         </select>

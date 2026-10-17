@@ -26,15 +26,15 @@ async function EditSubjectContent({ params }: { params: Promise<{ id: string }> 
   return (
     <>
       <AdminHeader email={user.email} />
-      <main className="mx-auto w-full min-w-0 max-w-4xl px-5 py-10 sm:px-8 sm:py-14">
+      <main className="mx-auto w-full min-w-0 max-w-4xl px-4 py-8 sm:px-8 sm:py-14">
         <Link href="/admin" className="text-sm font-bold text-slate-500 hover:text-[#1473f3]">← Voltar ao painel</Link>
-        <div className="mt-8 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_16px_50px_rgba(30,41,59,.08)] sm:p-10">
+        <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_16px_50px_rgba(30,41,59,.08)] sm:mt-8 sm:rounded-[2rem] sm:p-10">
           <p className="text-sm font-bold uppercase tracking-[.18em] text-[#1473f3]">Etapa 1 · Dados gerais</p>
           <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950">Informações da matéria</h1>
           <p className="mb-8 mt-3 text-sm leading-6 text-slate-500">Defina o curso, o título e a descrição geral da matéria. O conteúdo de estudo é organizado separadamente nas aulas abaixo.</p>
           <MateriaForm action={updateMateriaAction} cursos={(coursesResult.data ?? []) as Curso[]} materia={subjectResult.data as Materia} />
         </div>
-        <section className="mt-8 min-w-0 max-w-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
+        <section className="mt-8 min-w-0 max-w-full overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-[2rem] sm:p-10">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
             <div><p className="text-sm font-bold uppercase tracking-[.18em] text-[#1473f3]">Etapa 2 · Organização</p><h2 className="mt-2 text-2xl font-black text-slate-950">Aulas da matéria</h2><p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">Crie as aulas em sequência. Cada aula pode receber seu próprio PDF ou conteúdo para gerar um resumo independente.</p></div>
             <Link href={`/admin/materias/${id}/aulas/nova`} className="rounded-2xl bg-slate-900 px-5 py-3 text-center text-sm font-bold text-white">+ Nova aula</Link>

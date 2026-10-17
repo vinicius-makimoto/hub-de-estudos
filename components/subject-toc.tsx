@@ -2,7 +2,7 @@ import { extractMarkdownHeadings } from "@/lib/markdown-headings";
 import type { Aula } from "@/lib/types";
 
 export function SubjectToc({ aulas }: { aulas: Aula[] }) {
-  return <nav aria-label="Sumário da matéria" className="rounded-2xl border border-white/10 bg-[#0d1a2d] p-5 lg:flex lg:max-h-[calc(100dvh-3rem)] lg:flex-col lg:overflow-hidden">
+  return <nav aria-label="Sumário da matéria" className="rounded-2xl border border-white/10 bg-[#0d1a2d] p-5 lg:flex lg:max-h-[calc(100dvh-7.5rem)] lg:flex-col lg:overflow-hidden">
     <div className="shrink-0 border-b border-white/10 pb-4">
       <p className="font-mono text-xs font-bold uppercase tracking-[.18em] text-[#69a7ff]">{"// Sumário"}</p>
       <p className="mt-1 text-[11px] text-slate-500">Abra uma aula e escolha uma seção</p>

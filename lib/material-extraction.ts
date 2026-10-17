@@ -18,8 +18,9 @@ export async function extractMaterialText(file: File) {
   if (lowerName.endsWith(".pdf")) {
     const { extractText, getDocumentProxy } = await import("unpdf");
     const pdf = await getDocumentProxy(new Uint8Array(arrayBuffer));
-    const result = await extractText(pdf, { mergePages: true });
-    return Array.isArray(result.text) ? result.text.join("\n\n") : result.text;
+    const result = await extractText(pdf, { mergePages: false });
+    const pages = Array.isArray(result.text) ? result.text : [result.text];
+    return pages.map((page, index) => `[Página ${index + 1}]\n${page.trim()}`).join("\n\n");
   }
 
   if (lowerName.endsWith(".docx")) {

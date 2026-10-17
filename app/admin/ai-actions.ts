@@ -29,6 +29,16 @@ function mergeUnique<T>(existing: unknown, incoming: T[], key: (item: T) => stri
   }).slice(0, limit);
 }
 
+function upsertGeneratedSection(existing: string | null, fileName: string, generatedContent: string) {
+  const heading = `## Material: ${fileName}`;
+  const nextSection = `${heading}\n\n${generatedContent}`;
+  const sections = (existing ?? "").split(/\n\n---\n\n(?=## Material: )/).map((section) => section.trim()).filter(Boolean);
+  const index = sections.findIndex((section) => section.startsWith(heading));
+  if (index >= 0) sections[index] = nextSection;
+  else sections.push(nextSection);
+  return sections.join("\n\n---\n\n");
+}
+
 export async function generateFromFileAction(
   _previousState: AiActionState,
   formData: FormData,
@@ -111,9 +121,8 @@ export async function generateLessonFromFileAction(
     if (existingMaterial?.arquivo_path && existingMaterial.arquivo_path !== objectPath) await supabase.storage.from("materiais").remove([existingMaterial.arquivo_path]);
     const extractedText = await extractMaterialText(file);
     const generated = await generateStudyMaterial(aula.titulo, extractedText);
-    const sourceHeading = `## Material: ${file.name}`;
     const lessonUpdate = {
-      conteudo: aula.conteudo ? `${aula.conteudo}\n\n---\n\n${sourceHeading}\n\n${generated.conteudo}` : `${sourceHeading}\n\n${generated.conteudo}`,
+      conteudo: upsertGeneratedSection(aula.conteudo, file.name, generated.conteudo),
       temas: mergeUnique<string>(aula.temas, generated.temas, (item) => item, 30),
       conceitos: mergeUnique<Conceito>(aula.conceitos, generated.conceitos, (item) => item.titulo, 40),
       glossario: mergeUnique<GlossarioItem>(aula.glossario, generated.glossario, (item) => item.termo, 80),

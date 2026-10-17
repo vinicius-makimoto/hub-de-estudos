@@ -2,7 +2,8 @@
 
 import { deleteMaterialAction, reprocessMaterialAction } from "@/app/admin/material-actions";
 import type { AulaMaterial } from "@/lib/types";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const initialState = { error: "", message: "" };
 
@@ -13,13 +14,17 @@ function formatSize(value: number | null) {
 }
 
 function MaterialRow({ material }: { material: AulaMaterial }) {
+  const router = useRouter();
   const [reprocessState, reprocessAction, reprocessing] = useActionState(reprocessMaterialAction, initialState);
   const [deleteState, deleteAction, deleting] = useActionState(deleteMaterialAction, initialState);
   const statusStyle = material.status === "indexado" ? "bg-emerald-400/10 text-emerald-300" : material.status === "erro" ? "bg-rose-400/10 text-rose-300" : "bg-amber-400/10 text-amber-200";
+  useEffect(() => {
+    if (reprocessState.message) router.refresh();
+  }, [reprocessState.message, router]);
   return <article className="rounded-xl border border-white/10 bg-[#08111f] p-4">
     <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
       <div className="min-w-0"><div className="flex flex-wrap items-center gap-2"><h3 className="break-all text-sm font-bold text-white">{material.nome}</h3><span className={`rounded-full px-2.5 py-1 font-mono text-[10px] font-bold uppercase ${statusStyle}`}>{material.status}</span></div><p className="mt-2 text-xs text-slate-400">{formatSize(material.tamanho_bytes)} · {material.total_trechos} {material.total_trechos === 1 ? "trecho indexado" : "trechos indexados"}</p>{material.erro && <p className="mt-2 text-xs leading-5 text-rose-300">{material.erro}</p>}</div>
-      <div className="flex shrink-0 flex-wrap gap-2"><form action={reprocessAction}><input type="hidden" name="material_id" value={material.id}/><button disabled={reprocessing || deleting} className="rounded-lg border border-white/10 px-3 py-2 text-xs font-bold text-slate-300 transition hover:border-[#1473f3]/50 hover:text-white disabled:opacity-50">{reprocessing ? "Reprocessando…" : "Reprocessar"}</button></form><form action={deleteAction} onSubmit={(event) => { if (!window.confirm(`Remover ${material.nome} e seu índice do chat?`)) event.preventDefault(); }}><input type="hidden" name="material_id" value={material.id}/><button disabled={deleting || reprocessing} className="rounded-lg border border-rose-400/20 px-3 py-2 text-xs font-bold text-rose-300 transition hover:bg-rose-400/10 disabled:opacity-50">{deleting ? "Removendo…" : "Remover"}</button></form></div>
+      <div className="flex shrink-0 flex-wrap gap-2"><form action={reprocessAction} onSubmit={(event) => { if (!window.confirm("Regenerar este material substituirá todo o resumo, temas, conceitos, glossário, pontos de prova, flashcards e quiz atuais. O processamento pode levar até 5 minutos. Deseja continuar?")) event.preventDefault(); }}><input type="hidden" name="material_id" value={material.id}/><button disabled={reprocessing || deleting} className="rounded-lg border border-white/10 px-3 py-2 text-xs font-bold text-slate-300 transition hover:border-[#1473f3]/50 hover:text-white disabled:opacity-50">{reprocessing ? "Processando — não feche esta página…" : "Regenerar resumo e campos"}</button></form><form action={deleteAction} onSubmit={(event) => { if (!window.confirm(`Remover ${material.nome} e seu índice do chat?`)) event.preventDefault(); }}><input type="hidden" name="material_id" value={material.id}/><button disabled={deleting || reprocessing} className="rounded-lg border border-rose-400/20 px-3 py-2 text-xs font-bold text-rose-300 transition hover:bg-rose-400/10 disabled:opacity-50">{deleting ? "Removendo…" : "Remover"}</button></form></div>
     </div>
     {(reprocessState.error || deleteState.error) && <p role="alert" className="mt-3 text-xs text-rose-300">{reprocessState.error || deleteState.error}</p>}
     {(reprocessState.message || deleteState.message) && <p role="status" className="mt-3 text-xs text-emerald-300">{reprocessState.message || deleteState.message}</p>}

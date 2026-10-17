@@ -18,7 +18,7 @@ export function CourseExplorer({ cursos }: { cursos: Curso[] }) {
   }, [cursos, query]);
 
   return (
-    <section id="cursos" className="mx-auto max-w-6xl scroll-mt-6 px-5 pb-20 sm:px-8">
+    <section id="cursos" className="mx-auto max-w-6xl scroll-mt-32 px-4 pb-16 sm:scroll-mt-20 sm:px-8 sm:pb-20">
       <div className="mb-7 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
         <div>
           <p className="mb-2 text-sm font-bold uppercase tracking-[.18em] text-[#1473f3]">Continue aprendendo</p>
@@ -36,11 +36,11 @@ export function CourseExplorer({ cursos }: { cursos: Curso[] }) {
           {filtered.map((curso, index) => {
             return (
               <article key={curso.id} className="group overflow-hidden rounded-2xl border border-white/10 bg-white transition duration-300 hover:-translate-y-1 hover:border-[#1473f3]/45 hover:bg-[#162945]">
-                <div className="relative flex h-28 items-center justify-between overflow-hidden border-b border-white/10 bg-[#0d1a2d] p-5 text-white">
+                <div className="relative flex h-28 items-center justify-between overflow-hidden border-b border-white/10 bg-[#0d1a2d] bg-cover bg-center p-5 text-white" style={curso.imagem_url ? { backgroundImage: `linear-gradient(90deg, rgba(8,17,31,.88), rgba(8,17,31,.35)), url(${JSON.stringify(curso.imagem_url).slice(1, -1)})` } : undefined}>
                   <span className="font-mono text-4xl font-black tracking-[-.08em] text-white/[.08]">{String(index + 1).padStart(2, "0")}</span>
                   <span className="font-mono text-xs text-[#69a7ff]">course.open()</span>
                 </div>
-                <div className="p-6">
+                <div className="p-5 sm:p-6">
                   <div className="mb-4 flex min-h-6 items-center gap-2">
                     {curso.categoria && <span className="rounded-md border border-[#1473f3]/25 bg-[#1473f3]/10 px-2.5 py-1 text-xs font-bold text-[#69a7ff]">{curso.categoria}</span>}
                     {curso.carga_horaria && <span className="text-xs font-medium text-slate-500">{curso.carga_horaria}h</span>}

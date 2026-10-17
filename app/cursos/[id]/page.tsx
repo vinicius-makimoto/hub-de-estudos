@@ -58,7 +58,7 @@ export default async function MateriasPage({ params }: { params: Promise<{ id: s
   return (
     <main className="min-h-screen">
       <Header />
-      <div className="mx-auto max-w-5xl px-5 pb-20 pt-10 sm:px-8 sm:pt-14">
+      <div className="mx-auto max-w-5xl px-4 pb-16 pt-8 sm:px-8 sm:pb-20 sm:pt-14">
         <Link href="/" className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 transition hover:text-[#1473f3]">
           <span aria-hidden="true">←</span> Voltar aos cursos
         </Link>
@@ -71,10 +71,10 @@ export default async function MateriasPage({ params }: { params: Promise<{ id: s
           </section>
         ) : (
           <>
-            <section className="relative mt-8 overflow-hidden rounded-2xl border border-[#1473f3]/30 bg-[#0d1a2d] p-8 text-white shadow-[0_24px_70px_rgba(0,0,0,.3)] sm:p-12">
+            <section className="relative mt-6 overflow-hidden rounded-2xl border border-[#1473f3]/30 bg-[#0d1a2d] p-5 text-white shadow-[0_24px_70px_rgba(0,0,0,.3)] sm:mt-8 sm:p-12">
               <div aria-hidden="true" className="absolute -right-20 -top-28 size-80 rounded-full bg-[#1473f3]/15 blur-3xl" />
               <p className="relative font-mono text-xs font-bold uppercase tracking-[.2em] text-[#69a7ff]">{"// Curso"}</p>
-              <h1 className="relative mt-4 max-w-3xl text-3xl font-black tracking-[-.03em] sm:text-5xl">{curso?.titulo}</h1>
+              <h1 className="relative mt-4 max-w-3xl break-words text-2xl font-black tracking-[-.03em] min-[360px]:text-3xl sm:text-5xl">{curso?.titulo}</h1>
               <p className="relative mt-5 max-w-2xl text-sm leading-7 text-slate-500 sm:text-base">
                 {curso?.descricao || "Acesse as matérias publicadas e avance na sua jornada de aprendizagem."}
               </p>
@@ -93,7 +93,7 @@ export default async function MateriasPage({ params }: { params: Promise<{ id: s
                 <ol className="grid gap-4">
                   {materias.map((materia, index) => (
                     <li key={materia.id}>
-                      <Link href={`/materias/${materia.id}`} className="group flex gap-4 rounded-2xl border border-white/10 bg-white p-5 transition hover:-translate-y-0.5 hover:border-[#1473f3]/45 hover:bg-[#162945] focus:outline-none sm:items-center sm:gap-6 sm:p-6">
+                      <Link href={`/materias/${materia.id}`} className="group flex flex-col gap-4 rounded-2xl border border-white/10 bg-white p-4 transition hover:-translate-y-0.5 hover:border-[#1473f3]/45 hover:bg-[#162945] focus:outline-none min-[420px]:flex-row sm:items-center sm:gap-6 sm:p-6">
                         <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-blue-50 text-sm font-black text-[#1473f3]">{String(index + 1).padStart(2, "0")}</span>
                         <div className="min-w-0 flex-1">
                           <h3 className="text-lg font-bold text-slate-900">{materia.titulo}</h3>

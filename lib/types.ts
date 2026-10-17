@@ -7,6 +7,8 @@ export type Curso = {
   total_materias?: number | null;
   imagem_url?: string | null;
   created_at?: string | null;
+  publicado?: boolean;
+  criado_em?: string | null;
 };
 
 export type Materia = {
