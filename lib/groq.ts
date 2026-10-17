@@ -326,7 +326,7 @@ export async function generateStudyMaterial(title: string, sourceText: string) {
           role: "user",
           content: `Matéria: ${title}\n\nMapa obrigatório de cobertura por página:\n${coverageChecklist || "Material sem divisão explícita em páginas; cubra todas as seções identificadas."}\n\nMaterial de referência:\n${text}`,
         },
-      ], 6_000, 280_000, true, (content) => Boolean(parseStoredStudyMaterial(content)));
+      ], 6_000, 240_000, true, (content) => Boolean(parseStoredStudyMaterial(content)));
 
   if (!rawContent.trim()) throw new Error("A resposta não contém um resumo válido.");
 

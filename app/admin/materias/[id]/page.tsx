@@ -9,6 +9,11 @@ import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
 import { connection } from "next/server";
 
+// A geração do material pode levar alguns minutos. Sem este limite explícito,
+// a hospedagem pode encerrar a Server Action e exibir apenas a tela genérica
+// de erro antes que a aplicação consiga devolver uma mensagem ao formulário.
+export const maxDuration = 300;
+
 async function EditSubjectContent({ params }: { params: Promise<{ id: string }> }) {
   await connection();
   const { id } = await params;
