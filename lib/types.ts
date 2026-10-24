@@ -57,6 +57,7 @@ export type Aula = {
 };
 
 export type AulaMaterial = {
+  source_url?: string | null;
   id: string;
   aula_id: string;
   materia_id: string;

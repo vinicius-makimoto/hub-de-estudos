@@ -2,6 +2,7 @@
 
 import { prepareMaterialUploadAction, processStoredLessonMaterialAction } from "@/app/admin/ai-actions";
 import { createClient } from "@/lib/supabase/client";
+import { LinkMaterialImporter } from "./link-material-importer";
 import { FormEvent, useState, useTransition } from "react";
 
 export function AiLessonImporter({ aulaId, materiaId }: { aulaId: string; materiaId: string }) {
@@ -27,7 +28,7 @@ export function AiLessonImporter({ aulaId, materiaId }: { aulaId: string; materi
       window.location.reload();
     });
   }
-  return <section className="relative mb-8 overflow-hidden rounded-2xl border border-[#1473f3]/25 bg-[#0d1a2d] p-5 sm:p-6">
+  return <><section className="relative mb-8 overflow-hidden rounded-2xl border border-[#1473f3]/25 bg-[#0d1a2d] p-5 sm:p-6">
     <div aria-hidden="true" className="absolute -right-20 -top-24 size-56 rounded-full bg-[#1473f3]/10 blur-3xl" />
     <p className="relative font-mono text-xs font-bold uppercase tracking-[.18em] text-[#69a7ff]">{"// Assistente de conteúdo"}</p>
     <h2 className="relative mt-2 text-xl font-bold text-slate-900">Gerar descrição, resumo e temas da aula</h2>
@@ -39,5 +40,5 @@ export function AiLessonImporter({ aulaId, materiaId }: { aulaId: string; materi
       {error && <p role="alert" className="rounded-xl bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">{error}</p>}
       <button disabled={pending} className="rounded-lg bg-[#1473f3] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#005de0] disabled:cursor-wait disabled:opacity-60">{pending ? "Gerando resumo..." : "Enviar e gerar rascunho"}</button>
     </form>
-  </section>;
+  </section><LinkMaterialImporter aulaId={aulaId} materiaId={materiaId} /></>;
 }

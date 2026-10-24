@@ -2,6 +2,7 @@
 
 import { chunkMaterial } from "@/lib/chunking";
 import { extractMaterialText } from "@/lib/material-extraction";
+import { importExternalMaterial } from "@/lib/external-material";
 import { generateStudyMaterial, parseStoredStudyMaterial } from "@/lib/groq";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
@@ -25,7 +26,7 @@ export async function reprocessMaterialAction(_state: MaterialActionState, formD
   if (!aula) return { error: "A aula vinculada ao material não foi encontrada.", message: "" };
 
   const recovered = parseStoredStudyMaterial(aula.conteudo || "");
-  if (recovered) {
+  if (recovered && !material.source_url) {
     const { error: recoveryError } = await supabase.from("aulas").update({
       descricao: recovered.descricao,
       conteudo: recovered.conteudo,
@@ -46,10 +47,15 @@ export async function reprocessMaterialAction(_state: MaterialActionState, formD
 
   await supabase.from("aula_materiais").update({ status: "processando", erro: null, atualizado_em: new Date().toISOString() }).eq("id", materialId);
   try {
-    const { data: blob, error: downloadError } = await supabase.storage.from("materiais").download(material.arquivo_path);
-    if (downloadError || !blob) throw new Error("O arquivo não foi encontrado no armazenamento.");
-    const file = new File([await blob.arrayBuffer()], material.nome, { type: material.tipo_mime || blob.type || "application/octet-stream" });
-    const text = await extractMaterialText(file);
+    let text: string;
+    if (material.source_url) {
+      text = await importExternalMaterial(material.source_url);
+    } else {
+      const { data: blob, error: downloadError } = await supabase.storage.from("materiais").download(material.arquivo_path);
+      if (downloadError || !blob) throw new Error("O arquivo não foi encontrado no armazenamento.");
+      const file = new File([await blob.arrayBuffer()], material.nome, { type: material.tipo_mime || blob.type || "application/octet-stream" });
+      text = await extractMaterialText(file);
+    }
     const generated = await generateStudyMaterial(aula.titulo, text);
     const chunks = chunkMaterial(text);
     if (!chunks.length) throw new Error("O arquivo não contém texto suficiente para indexação.");

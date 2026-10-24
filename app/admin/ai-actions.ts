@@ -55,6 +55,7 @@ type StoredFileInput = {
   fileName: string;
   fileType: string;
   objectPath: string;
+  sourceUrl?: string;
 };
 
 export async function prepareMaterialUploadAction(input: PrepareUploadInput): Promise<PreparedMaterialUpload> {
@@ -130,7 +131,7 @@ export async function processStoredLessonMaterialAction(input: StoredFileInput):
     const { data: existingMaterial, error: existingMaterialError } = await supabase.from("aula_materiais").select("id, arquivo_path").eq("aula_id", aulaId).eq("nome", fileName).maybeSingle();
     if (existingMaterialError) throw new Error("Execute a migration de gestão de materiais antes de enviar novos arquivos.");
     const stored = await downloadStoredFile(input);
-    const { data: trackedMaterial, error: trackError } = await supabase.from("aula_materiais").upsert({ aula_id: aulaId, materia_id: aula.materia_id, nome: fileName, arquivo_path: objectPath, tamanho_bytes: stored.file.size, tipo_mime: stored.file.type || null, status: "processando", erro: null, total_trechos: 0, atualizado_em: new Date().toISOString(), indexado_em: null }, { onConflict: "aula_id,nome" }).select("id").single();
+    const { data: trackedMaterial, error: trackError } = await supabase.from("aula_materiais").upsert({ aula_id: aulaId, materia_id: aula.materia_id, nome: fileName, arquivo_path: objectPath, tamanho_bytes: stored.file.size, tipo_mime: stored.file.type || null, status: "processando", erro: null, total_trechos: 0, atualizado_em: new Date().toISOString(), indexado_em: null, ...(input.sourceUrl ? { source_url: input.sourceUrl } : {}) }, { onConflict: "aula_id,nome" }).select("id").single();
     if (trackError || !trackedMaterial) throw new Error("Não foi possível registrar o material. Execute a migration mais recente no Supabase.");
     trackedMaterialId = trackedMaterial.id;
     if (existingMaterial?.arquivo_path && existingMaterial.arquivo_path !== objectPath) await supabase.storage.from("materiais").remove([existingMaterial.arquivo_path]);

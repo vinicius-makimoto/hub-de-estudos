@@ -9,8 +9,8 @@ export function AdminHeader({ email }: { email?: string }) {
           <span className="text-[#1473f3]">&lt;/</span>HubEstudos<span className="text-[#1473f3]">/&gt;</span>
           <span className="ml-2 rounded border border-[#1473f3]/30 bg-[#1473f3]/10 px-1.5 py-0.5 font-sans text-[9px] uppercase tracking-[.16em] text-[#69a7ff]">Admin</span>
         </Link>
-        <div className="flex items-center gap-2 sm:gap-3">
-          {email && <span className="hidden text-xs text-slate-500 sm:block">{email}</span>}
+        <div className="flex min-w-0 shrink-0 items-center gap-2 sm:max-w-[65%] sm:shrink sm:gap-3">
+          {email && <span className="hidden min-w-0 truncate text-xs text-slate-500 sm:block">{email}</span>}
           <Link href="/" className="rounded-lg px-2 py-2 text-xs font-bold text-slate-500 transition hover:bg-white/[.04] hover:text-white sm:px-3 sm:text-sm">Ver site</Link>
           <form action={signOutAction}><button className="rounded-lg border border-white/10 px-3 py-2 text-xs font-bold text-slate-500 transition hover:border-rose-400/40 hover:bg-rose-500/10 hover:text-rose-300 sm:text-sm">Sair</button></form>
         </div>

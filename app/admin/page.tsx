@@ -32,7 +32,7 @@ async function AdminContent() {
   return (
     <>
       <AdminHeader email={user.email} />
-      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-8 sm:py-14">
+      <main className="mx-auto w-full min-w-0 max-w-6xl px-4 py-8 sm:px-8 sm:py-14">
         <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
             <p className="text-sm font-bold uppercase tracking-[.18em] text-[#1473f3]">
@@ -60,7 +60,7 @@ async function AdminContent() {
         </section>
 
         {!error && <section className="mt-12" aria-labelledby="courses-title"><div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-[#1473f3]">Etapa 1</p><h2 id="courses-title" className="mt-1 text-2xl font-black text-slate-950">Cursos cadastrados</h2><p className="mt-2 text-sm text-slate-500">Escolha um curso para adicionar uma matéria diretamente nele.</p></div><Link href="/admin/cursos/novo" className="rounded-xl border border-[#1473f3]/30 px-4 py-2.5 text-sm font-bold text-[#1473f3] hover:bg-blue-50">+ Novo curso</Link></div>
-          {cursos.length ? <div className="mt-5 grid gap-4 sm:grid-cols-2">{cursos.map((curso) => { const count = materias.filter((materia) => materia.curso_id === curso.id).length; return <article key={curso.id} className="rounded-2xl border border-white/10 bg-white p-5"><div className="flex items-start justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-wider text-[#1473f3]">{curso.publicado === false ? "Rascunho" : "Publicado"}</p><h3 className="mt-2 font-bold text-slate-900">{curso.titulo}</h3><p className="mt-2 text-sm text-slate-500">{count} {count === 1 ? "matéria cadastrada" : "matérias cadastradas"}</p></div><span className="grid size-10 shrink-0 place-items-center rounded-xl bg-blue-50 font-black text-[#1473f3]">{count}</span></div><div className="mt-5 flex flex-wrap gap-2"><Link href={`/admin/materias/nova?curso=${curso.id}`} className="inline-flex rounded-lg bg-[#1473f3] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#005de0]">+ Adicionar matéria</Link><Link href={`/admin/cursos/${curso.id}`} className="inline-flex rounded-lg border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50">Editar curso</Link></div></article>; })}</div> : <div className="mt-5 rounded-2xl border border-dashed border-slate-300 p-7 text-center"><p className="font-bold text-slate-700">Você ainda não cadastrou nenhum curso.</p><p className="mt-2 text-sm text-slate-500">Comece pelo curso; em seguida, o sistema levará você ao cadastro da primeira matéria.</p></div>}
+          {cursos.length ? <div className="mt-5 grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">{cursos.map((curso) => { const count = materias.filter((materia) => materia.curso_id === curso.id).length; return <article key={curso.id} className="min-w-0 rounded-2xl border border-white/10 bg-white p-5 [overflow-wrap:anywhere]"><div className="flex min-w-0 items-start justify-between gap-4"><div className="min-w-0"><p className="text-xs font-bold uppercase tracking-wider text-[#1473f3]">{curso.publicado === false ? "Rascunho" : "Publicado"}</p><h3 className="mt-2 font-bold text-slate-900">{curso.titulo}</h3><p className="mt-2 text-sm text-slate-500">{count} {count === 1 ? "matéria cadastrada" : "matérias cadastradas"}</p></div><span className="grid size-10 shrink-0 place-items-center rounded-xl bg-blue-50 font-black text-[#1473f3]">{count}</span></div><div className="mt-5 flex flex-wrap gap-2"><Link href={`/admin/materias/nova?curso=${curso.id}`} className="inline-flex rounded-lg bg-[#1473f3] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#005de0]">+ Adicionar matéria</Link><Link href={`/admin/cursos/${curso.id}`} className="inline-flex rounded-lg border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50">Editar curso</Link></div></article>; })}</div> : <div className="mt-5 rounded-2xl border border-dashed border-slate-300 p-7 text-center"><p className="font-bold text-slate-700">Você ainda não cadastrou nenhum curso.</p><p className="mt-2 text-sm text-slate-500">Comece pelo curso; em seguida, o sistema levará você ao cadastro da primeira matéria.</p></div>}
         </section>}
 
         {!error && <div className="mt-12 flex flex-wrap items-end justify-between gap-4"><div><p className="text-xs font-bold uppercase tracking-[.16em] text-[#1473f3]">Etapas 2 e 3</p><h2 className="mt-1 text-2xl font-black text-slate-950">Matérias e aulas</h2><p className="mt-2 text-sm text-slate-500">Gerencie os dados da disciplina, suas aulas, materiais e publicação.</p></div><Link href="/admin/materias/nova" className="rounded-xl bg-[#1473f3] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#005de0]">+ Nova matéria</Link></div>}
@@ -71,11 +71,11 @@ async function AdminContent() {
             políticas RLS para usuários autenticados.
           </div>
         ) : materias.length ? (
-          <div className="mt-5 grid gap-4">
+          <div className="mt-5 grid min-w-0 grid-cols-1 gap-4">
             {materias.map((materia) => (
               <article
                 key={materia.id}
-                className="flex flex-col gap-5 rounded-2xl border border-white/10 bg-white p-5 transition hover:border-[#1473f3]/35 sm:flex-row sm:items-center sm:p-6"
+                className="flex w-full min-w-0 max-w-full flex-col gap-5 rounded-2xl border border-white/10 bg-white p-5 transition hover:border-[#1473f3]/35 sm:p-6 lg:flex-row lg:items-center"
               >
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
@@ -84,26 +84,26 @@ async function AdminContent() {
                     >
                       {materia.publicado ? "Publicado" : "Rascunho"}
                     </span>
-                    <span className="text-xs font-semibold text-slate-400">
+                    <span className="min-w-0 max-w-full text-xs font-semibold text-slate-400 [overflow-wrap:anywhere]">
                       {courseTitles.get(materia.curso_id) ??
                         "Curso não encontrado"}
                     </span>
                   </div>
-                  <h2 className="mt-3 text-lg font-bold text-slate-900">
+                  <h2 className="mt-3 text-lg font-bold text-slate-900 [overflow-wrap:anywhere]">
                     {materia.titulo}
                   </h2>
-                  <p className="mt-1 truncate text-sm text-slate-500">
+                  <p className="mt-1 line-clamp-2 text-sm text-slate-500 [overflow-wrap:anywhere]">
                     {materia.descricao || "Sem descrição"}
                   </p>
                 </div>
-                <div className="grid w-full gap-2 min-[430px]:flex min-[430px]:flex-wrap sm:w-auto">
+                <div className="flex w-full min-w-0 flex-wrap items-center gap-2 sm:flex-nowrap lg:w-auto lg:shrink-0">
                   <Link
                     href={`/admin/materias/${materia.id}`}
-                    className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-[#1473f3]"
+                    className="inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-xl border border-slate-200 px-3 py-2 text-sm font-bold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-[#1473f3]"
                   >
                      Conteúdo e aulas
                   </Link>
-                  <form action={toggleMateriaAction}>
+                  <form action={toggleMateriaAction} className="flex shrink-0">
                     <input type="hidden" name="id" value={materia.id} />
                     <input
                       type="hidden"
@@ -115,14 +115,14 @@ async function AdminContent() {
                       name="publicado"
                       value={String(materia.publicado)}
                     />
-                    <button className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-600 transition hover:bg-slate-100">
+                    <button className="inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-xl border border-slate-200 px-3 py-2 text-sm font-bold text-slate-600 transition hover:bg-slate-100">
                       {materia.publicado ? "Despublicar" : "Publicar"}
                     </button>
                   </form>
                   {materia.publicado && (
                     <Link
                       href={`/materias/${materia.id}`}
-                      className="rounded-xl px-4 py-2.5 text-sm font-bold text-[#1473f3] hover:bg-blue-50"
+                      className="inline-flex min-h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-xl px-3 py-2 text-sm font-bold text-[#1473f3] hover:bg-blue-50"
                     >
                       Ver no site
                     </Link>
